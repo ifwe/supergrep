@@ -145,7 +145,7 @@ fatal, last</p>
         </div>
 
         <div id="export-help-dialog" title="Exporting Data">
-            <p>Raw logs and stack traces can be exported to either a gist or IRC (via irccat)</p>
+            <p>Raw logs and stack traces can be exported to either a gist or IRC (via irccat) or HipChat</p>
             <p>Sending log data to a gist is as simple as clicking the [GIST] link.</p>
             <p>Exporting to IRC consists of clicking the [IRC] link and then entering the channel or nick to send the data to. To specify a channel, use the format <tt>#channel</tt>:</p>
             <p class="code">#push
@@ -157,6 +157,7 @@ fatal, last</p>
             <p>In addition to the channel/nick, you can also add a note, which will be displayed above the log data. Some examples:</p>
             <p class="code">@milo Was this you?
 #etsy LOL, wut?</p>
+            <p>Exporting to HipChat consists of clicking the [HipChat] link and then entering the name of the room to send the data to.</p>
         </div>
 
         <script id="tpl_msgEntry" type="text/html">
@@ -175,6 +176,10 @@ fatal, last</p>
 
         <script id="tpl_ircLink" type="text/html">
             <a class="irc" onclick="Etsy.Supergrep.submitIrc(prompt('Enter the @nick or #channel to send to', '#push'), <%= data.data %>); return false;" href="#">[IRC]</a>
+        </script>
+
+        <script id="tpl_hipchatLink" type="text/html">
+            <a class="hipchat" onclick="Etsy.Supergrep.submitHipChat(prompt('Enter the HipChat room name to send to', 'push'), <%= data.data %>); return false;" href="#">[HipChat]</a>
         </script>
 
         <script id="tpl_logEntry" type="text/html">
@@ -202,6 +207,7 @@ fatal, last</p>
                         <% renderTemplate('tpl_exportHelpLink'); %>
                         <% renderTemplate('tpl_gistLink', { ns: data.ns, timestamp: (data.timestamp.getTime() / 1000), data: "$('#" + data.id + " .rawdata .container').text().trim()" }); %>
                         <% renderTemplate('tpl_ircLink', { chan: '#sgtest', data: "$('#" + data.id + " .rawdata .container').text().trim()" }); %>
+                        <% renderTemplate('tpl_hipchatLink', { data: "$('#" + data.id + " .rawdata .container').text().trim()" }); %>
                         <h1>Raw Log</h1>
                         <div class="container">
                             <%= data.rawdata %>
@@ -212,6 +218,7 @@ fatal, last</p>
                             <% renderTemplate('tpl_exportHelpLink'); %>
                             <% renderTemplate('tpl_gistLink', { ns: data.ns, timestamp: (data.timestamp.getTime() / 1000), data: "$('#" + data.id + " .stacktrace .raw').text().trim()" }); %>
                             <% renderTemplate('tpl_ircLink', { chan: '#sgtest', data: "$('#" + data.id + " .stacktrace .raw').text().trim()" }); %>
+                            <% renderTemplate('tpl_hipchatLink', { data: "$('#" + data.id + " .stacktrace .raw').text().trim()" }); %>
                             <h1>Stack Trace</h1>
                             <div class="container">
                                 <ul>

@@ -33,6 +33,7 @@
     , "uglify-js":  "1.2.x"
     , "validator":  "0.3.x"
     , "express":    ">=2.5.x"
+    , "node-hipchat": "0.2.0"
   }
 
   , "engines": { "node": ">= 0.6.0" }

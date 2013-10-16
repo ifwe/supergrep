@@ -114,6 +114,19 @@
         });
     };
 
+    sg.submitHipChat = function Etsy$Supergrep$submitHipChat (target, data) {
+        target = $.trim(target);
+
+        if (!target) {
+            return;
+        }
+
+        $.ajax('/hipchat', {
+            type: 'POST',
+            data: { target: target, data: data }
+        });
+    };
+
     sg.watchLogs = function Etsy$Supergrep$watchLogs (subscribedLogs, unsubscribedLogs) {
         pvt.subscribedLogs = subscribedLogs;
         pvt.unsubscribedLogs = unsubscribedLogs;
