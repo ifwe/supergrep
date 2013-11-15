@@ -8,6 +8,7 @@ var socketio    = require('socket.io');
 var less        = require('less');
 var uglify      = require('uglify-js');
 var LogReader   = require('./lib/logreader');
+var HipChat     = require('node-hipchat');
 
 var STATIC_PATH = '/static';
 
@@ -88,6 +89,19 @@ app.post('/irccat', function (req, res, next) {
                     .connect(config.irccat.port, config.irccat.host);
             }
         });
+});
+
+app.post('/hipchat', function (req, res, next) {
+    res.send(200);
+    var params = req.body;
+    if (params.target && params.data) {
+        var hipchat = new HipChat(config.hipchat.apikey);
+        params.room    = params.target;
+        params.message = params.data;
+        params.color   = config.hipchat.color || 'purple';
+        params.from    = config.hipchat.from;
+        hipchat.postMessage(params);
+    }
 });
 //Compiles LESS files to CSS
 app.get('/*.css', function (req, res, next) {

@@ -12,6 +12,10 @@ exports.config = {
         prefix: 'SUPERGREP ',
         maxchars: 450
     },
+    hipchat: {
+        from: 'SUPERGREP',
+        apikey: "your-hipchat-key"
+    },
     files: [
         {
             name: 'web',
